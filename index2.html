@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22 июня 1941 г. — Начало Великой Отечественной войны</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background-color: #d9cdb3;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .film-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="200" height="200" filter="url(%23noise)" opacity="0.08"/></svg>') repeat;
+            animation: grain 0.5s steps(10) infinite;
+        }
+        @keyframes grain {
+            0% { transform: translate(0,0); }
+            25% { transform: translate(-5px,2px); }
+            50% { transform: translate(3px,-3px); }
+            75% { transform: translate(-2px,5px); }
+            100% { transform: translate(4px,-1px); }
+        }
+        .scratches {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 998;
+            background: linear-gradient(transparent 95%, rgba(255,255,240,0.03) 95%);
+            background-size: 100% 8px;
+            animation: scratchMove 12s linear infinite;
+        }
+        @keyframes scratchMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100px; }
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.7)), url('https://www.rkka.ru/maps/tv1.gif') center/cover;
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            border-bottom: 4px solid #c0392b;
+            position: relative;
+            overflow: hidden;
+        }
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #e74c3c;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            letter-spacing: 2px;
+        }
+        .date {
+            font-size: 1.8rem;
+            color: #e74c3c;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .countdown-section {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .countdown-clock {
+            background: #1a1a1a;
+            color: #e0d7c0;
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            border-left: 6px solid #c0392b;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .clock-face {
+            width: 120px;
+            height: 120px;
+            border: 6px solid #c0392b;
+            border-radius: 50%;
+            position: relative;
+            background: radial-gradient(circle at center, #2c3e50, #111);
+            box-shadow: 0 0 20px rgba(192,57,43,0.5);
+        }
+        /* Стрелки */
+        .hour-hand, .minute-hand, .second-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transition: transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        .hour-hand {
+            width: 4px;
+            height: 30px;
+            margin-left: -2px;
+            background: #e74c3c;
+            border-radius: 3px;
+            transform: rotate(0deg); /* начальное положение */
+        }
+        .minute-hand {
+            width: 3px;
+            height: 45px;
+            margin-left: -1.5px;
+            background: #bdc3c7;
+            border-radius: 3px;
+            transform: rotate(0deg);
+        }
+        .second-hand {
+            width: 2px;
+            height: 55px;
+            margin-left: -1px;
+            background: #f1c40f;
+            border-radius: 2px;
+            transform: rotate(0deg);
+            animation: rotateSecond 60s infinite linear;
+            transition: none;
+        }
+        @keyframes rotateSecond {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: #c0392b;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+        .countdown-text {
+            text-align: left;
+        }
+        .countdown-text h2 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: #e74c3c;
+            border: none;
+            font-family: 'Courier New', monospace;
+        }
+        .countdown-text p {
+            font-size: 1.2rem;
+            margin: 0.5rem 0 0;
+            color: #ccc;
+            font-style: italic;
+        }
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid rgba(231,76,60,0.4);
+            transform: translate(-50%, -50%);
+            animation: ringPulse 2s infinite;
+        }
+        @keyframes ringPulse {
+            0% { width: 120px; height: 120px; opacity: 0.8; }
+            100% { width: 160px; height: 160px; opacity: 0; }
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        section {
+            margin-bottom: 3.5rem;
+            background: rgba(255,250,240,0.9);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-left: 5px solid #c0392b;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(2px);
+            position: relative;
+            z-index: 1;
+        }
+        section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #c0392b;
+            padding-bottom: 0.7rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        h2::before {
+            content: "★";
+            color: #c0392b;
+            font-size: 1.4rem;
+        }
+        .description p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 1.1rem;
+        }
+        .description .highlight {
+            background: rgba(231,76,60,0.1);
+            padding: 0.8rem 1.2rem;
+            border-left: 4px solid #c0392b;
+            font-weight: bold;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 2rem 0;
+        }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 18px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #c0392b;
+            border-radius: 3px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 30px;
+        }
+        .timeline-item::before {
+            content: attr(data-time);
+            position: absolute;
+            left: -55px;
+            top: 0;
+            background: #c0392b;
+            color: white;
+            padding: 0.2rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .timeline-item::after {
+            content: "";
+            position: absolute;
+            left: -28px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border: 3px solid #c0392b;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        .timeline-content {
+            background: #f9f7f4;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            border: 1px solid #e0d5c7;
+        }
+        .timeline-content h3 {
+            color: #c0392b;
+            margin-bottom: 0.4rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .image-item {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .image-item:hover {
+            transform: scale(1.02);
+        }
+        .image-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 3px solid #2c3e50;
+        }
+        .image-caption {
+            padding: 0.8rem;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+            background: #f0ede8;
+            font-size: 0.95rem;
+        }
+
+        .video-wrapper {
+            grid-column: 1 / -1;
+            border: 3px solid #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+        .video-overlay:hover {
+            background: rgba(0,0,0,0.6);
+        }
+        .play-button {
+            width: 70px;
+            height: 70px;
+            background: #c0392b;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 28px;
+            box-shadow: 0 0 20px rgba(192,57,43,0.7);
+            transition: transform 0.2s;
+        }
+        .video-overlay:hover .play-button {
+            transform: scale(1.1);
+        }
+        .caption {
+            padding: 0.8rem;
+            background: #f0ede8;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .fact-card {
+            background: rgba(253,248,245,0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e8d5c8;
+            transition: transform 0.3s;
+        }
+        .fact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .fact-number {
+            font-size: 2.5rem;
+            color: #c0392b;
+            font-weight: bold;
+            display: block;
+        }
+        .fact-label {
+            font-size: 0.95rem;
+            color: #555;
+            margin-top: 0.5rem;
+        }
+
+        blockquote {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 2rem;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            font-style: italic;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        blockquote::before {
+            content: "“";
+            font-size: 4rem;
+            color: #c0392b;
+            position: absolute;
+            left: 20px;
+            top: -10px;
+            font-family: Georgia, serif;
+        }
+        blockquote footer {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #bdc3c7;
+            font-style: normal;
+            background: none;
+        }
+
+        .sources ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sources li {
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed #ddd;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .sources li::before {
+            content: "📄";
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #2c3e50;
+            color: white;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        .memory-candle {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .timeline-item::before {
+                left: -45px;
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+            }
+            blockquote { font-size: 1.1rem; padding: 1.5rem; }
+            .countdown-text h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="film-grain"></div>
+    <div class="scratches"></div>
+
+    <header>
+        <h1>Начало Великой Отечественной войны</h1>
+        <p class="date">22 июня 1941 года</p>
+        <p class="subtitle">День, изменивший ход мировой истории</p>
+    </header>
+
+    <div class="countdown-section">
+        <div class="countdown-clock">
+            <div class="clock-face" id="clockFace">
+                <div class="hour-hand" id="hourHand"></div>
+                <div class="minute-hand" id="minuteHand"></div>
+                <div class="second-hand"></div>
+                <div class="clock-center"></div>
+                <div class="pulse-ring"></div>
+            </div>
+            <div class="countdown-text">
+                <h2>03:15</h2>
+                <p>оставалось до вероломного вторжения. <br> Мирная жизнь оборвалась навсегда.</p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section class="description">
+            <h2>Трагический рассвет</h2>
+            <p>22 июня 1941 года — одна из самых трагических и героических дат в истории России. В этот день фашистская Германия вероломно, без объявления войны, напала на Советский Союз, разорвав пакт о ненападении. Началась Великая Отечественная война, продлившаяся 1418 дней и ночей.</p>
+            <div class="highlight">
+                ⚠️ План «Барбаросса» — стратегический план нападения на СССР, утверждённый Гитлером в декабре 1940 года. Предусматривал молниеносную войну (блицкриг) и разгром Красной армии за 6-8 недель. Германия сосредоточила у границ СССР 5,5 миллионов солдат, 4300 танков, 47 000 орудий и около 5000 самолётов.
+            </div>
+            <p>В 3:15 утра по московскому времени немецкая артиллерия открыла массированный огонь по советским пограничным заставам и укреплениям. Одновременно люфтваффе начало бомбардировки Киева, Минска, Севастополя, Каунаса и других городов. Аэродромы западных военных округов подверглись сокрушительным ударам — сотни советских самолётов были уничтожены прямо на земле, так и не успев взлететь.</p>
+            <p>Несмотря на хаос и внезапность нападения, советские пограничники и части прикрытия оказали ожесточённое сопротивление. Бессмертный подвиг совершили защитники Брестской крепости, которые держали оборону в полном окружении больше месяца, отвлекая значительные силы врага. Уже в первый день войны родились примеры массового героизма: лётчики совершали воздушные и огненные тараны, пехотинцы стояли насмерть на границе.</p>
+            <p>В полдень 22 июня заместитель председателя Совнаркома В.М. Молотов выступил по радио с обращением к советскому народу. Его слова стали пророческими и вдохновляющими на долгие годы борьбы.</p>
+        </section>
+
+        <blockquote>
+            «Наше дело правое. Враг будет разбит. Победа будет за нами!»
+            <footer>— В.М. Молотов, 22 июня 1941 г., 12:15 по московскому времени</footer>
+        </blockquote>
+
+        <section>
+            <h2>Хронология 22 июня 1941 года</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-time="00:30">
+                    <div class="timeline-content">
+                        <h3>Директива №1</h3>
+                        <p>Нарком обороны Тимошенко и начальник Генштаба Жуков направляют в войска директиву о возможном нападении немцев 22-23 июня. Однако в большинстве частей её не успевают получить до начала боевых действий.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-time="03:15">
+                    <div class="timeline-content">
+                        <h3>Артиллерийская подготовка</h3>
+                        <p>Тысячи немецких орудий открывают ураганный огонь по советским позициям. Одновременно авиация начинает бомбардировки городов и аэродромов.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-time="04:00">
+                    <div class="timeline-content">
+                        <h3>Переход границы</h3>
+                        <p>Сухопутные войска вермахта переходят государственную границу СССР на всём протяжении от Балтики до Чёрного моря. Начинаются приграничные сражения.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-time="05:30">
+                    <div class="timeline-content">
+                        <h3>Посол в Берлине</h3>
+                        <p>Министр иностранных дел Германии Риббентроп вручает советскому послу Деканозову ноту об объявлении войны, задним числом оправдывая уже идущее вторжение.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-time="12:15">
+                    <div class="timeline-content">
+                        <h3>Обращение Молотова</h3>
+                        <p>По радио звучит знаменитая речь В.М. Молотова, в которой он сообщает советскому народу о вероломном нападении и выражает уверенность в победе.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-time="22:00">
+                    <div class="timeline-content">
+                        <h3>Итоги первого дня</h3>
+                        <p>Немецкие войска продвинулись вглубь советской территории на 15-60 км. Уничтожено около 1200 советских самолётов, потеряны стратегические склады и узлы связи. Но сопротивление не сломлено.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Цена первого дня</h2>
+            <div class="facts-grid" id="factsContainer">
+                <div class="fact-card">
+                    <span class="fact-number" data-target="1200">0</span>
+                    <span class="fact-label">советских самолётов уничтожено в первый день</span>
+                </div>
+                <div class="fact-card">
+                    <span class="fact-number" data-target="3000000">0</span>
+                    <span class="fact-label">немецких солдат вторглись на территорию СССР</span>
+                </div>
+                <div class="fact-card">
+                    <span class="fact-number" data-target="190">0</span>
+                    <span class="fact-label">советских дивизий встретили удар врага</span>
+                </div>
+                <div class="fact-card">
+                    <span class="fact-number" data-target="8">0</span>
+                    <span class="fact-label">дней держалась Брестская крепость (отдельные очаги — до месяца)</span>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Исторические свидетельства</h2>
+            <div class="gallery-grid">
+                <div class="video-wrapper">
+                    <div class="video-container">
+                        <iframe src="" allow="clipboard-write; encrypted-media" allowfullscreen title="Объявление о начале войны по радио"></iframe>
+                        <div class="video-overlay" id="videoOverlay">
+                            <div class="play-button">▶</div>
+                            <p style="color: white; margin-top: 12px; font-size: 1.1rem;">Нажмите для воспроизведения речи Молотова</p>
+                        </div>
+                    </div>
+                    <div class="caption">Объявление о начале войны по радио (выступление В.М. Молотова)</div>
+                </div>
+
+                <div class="image-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC2XhsYOg7voD7_dRwYSE0uEP3JU_CbWdSgw&s" alt="Солдаты на границе 22 июня 1941 года">
+                    <div class="image-caption">Советские солдаты на границе в первые часы войны</div>
+                </div>
+
+                <div class="image-item">
+                    <img src="https://cdn.ananasposter.ru/image/cache/catalog/poster/retro/95/2158-1000x830.jpg" alt="Плакат «Родина-мать зовёт»">
+                    <div class="image-caption">Плакат «Родина-мать зовёт!» — создан в июне 1941 г., художник И. Тоидзе</div>
+                </div>
+
+                <div class="image-item">
+                    <img src="https://www.rkka.ru/maps/tv1.gif" alt="Карта начального периода Великой Отечественной войны">
+                    <div class="image-caption">Карта боевых действий начального периода (июнь–июль 1941 г.)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="description">
+            <h2>Подвиг Брестской крепости</h2>
+            <p>Брестская крепость приняла на себя один из первых и самых мощных ударов. Немецкое командование планировало захватить её за несколько часов, однако ожесточённое сопротивление гарнизона нарушило эти планы. Красноармейцы, пограничники и члены семей командиров сражались в полном окружении, без воды, еды и медикаментов.</p>
+            <p>На стенах крепости до сих пор сохранились надписи её защитников: <strong>«Я умираю, но не сдаюсь! Прощай, Родина. 20.VII.41»</strong>. Эти слова стали символом несгибаемой воли советского солдата.</p>
+            <p>Оборона крепости продолжалась до конца июля 1941 года, сковывая целую немецкую дивизию. Подвиг её защитников был оценён лишь после войны — в 1965 году крепости присвоено звание «Крепость-герой».</p>
+        </section>
+
+        <section class="sources">
+            <h2>Использованные источники информации</h2>
+            <ul>
+                <li>Великая Отечественная война 1941–1945 гг. Энциклопедия. — М.: Советская энциклопедия, 1985.</li>
+                <li>История Второй мировой войны: В 12 т. — М.: Воениздат, 1973–1982.</li>
+                <li>Документы и материалы начального периода Великой Отечественной войны (июнь–июль 1941 г.).</li>
+                <li>Сайт Министерства обороны РФ: раздел «Великая Отечественная война».</li>
+                <li>Архивные фотоматериалы Российского государственного военного архива.</li>
+                <li>Воспоминания маршала Г.К. Жукова «Воспоминания и размышления».</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p><span class="memory-candle">🕯️</span> День памяти и скорби — 22 июня <span class="memory-candle">🕯️</span></p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Никто не забыт, ничто не забыто</p>
+    </footer>
+
+    <script>
+        // Активация видео
+        const overlay = document.getElementById('videoOverlay');
+        const iframe = document.querySelector('.video-container iframe');
+        overlay.addEventListener('click', function() {
+            iframe.src = "https://rutube.ru/video/embed/b8553f217ee3bdb85c293510b70c1942/";
+            overlay.style.display = 'none';
+        });
+
+        // Анимация стрелок часов при загрузке
+        window.addEventListener('load', function() {
+            const hourHand = document.getElementById('hourHand');
+            const minuteHand = document.getElementById('minuteHand');
+            // Углы для времени 03:15: часовая стрелка на 3 часах и немного вперёд (3*30 + 15*0.5 = 97.5 градусов),
+            // минутная на 15 минутах (90 градусов)
+            if (hourHand && minuteHand) {
+                hourHand.style.transform = 'rotate(97.5deg)';
+                minuteHand.style.transform = 'rotate(90deg)';
+            }
+        });
+
+        // Анимация счётчиков при скролле
+        const counters = document.querySelectorAll('.fact-number');
+        const observerOptions = { threshold: 0.5 };
+
+        const animateCounter = (el) => {
+            const target = +el.getAttribute('data-target');
+            const duration = 2000;
+            const startTime = performance.now();
+
+            const updateCounter = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const value = Math.floor(progress * target);
+                el.textContent = value.toLocaleString();
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    el.textContent = target.toLocaleString();
+                }
+            };
+            requestAnimationFrame(updateCounter);
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    animateCounter(counter);
+                    observer.unobserve(counter);
+                }
+            });
+        }, observerOptions);
+
+        counters.forEach(counter => observer.observe(counter));
+    </script>
+</body>
+</html>
